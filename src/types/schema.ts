@@ -1197,8 +1197,8 @@ export class Mint extends Entity {
     }
   }
 
-  get liquityAmount(): BigInt | null {
-    let value = this.get("liquityAmount");
+  get liquidityAmount(): BigInt | null {
+    let value = this.get("liquidityAmount");
     if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -1206,11 +1206,11 @@ export class Mint extends Entity {
     }
   }
 
-  set liquityAmount(value: BigInt | null) {
+  set liquidityAmount(value: BigInt | null) {
     if (value === null) {
-      this.unset("liquityAmount");
+      this.unset("liquidityAmount");
     } else {
-      this.set("liquityAmount", Value.fromBigInt(value as BigInt));
+      this.set("liquidityAmount", Value.fromBigInt(value as BigInt));
     }
   }
 
@@ -1340,8 +1340,8 @@ export class Burn extends Entity {
     }
   }
 
-  get liquityAmount(): BigInt | null {
-    let value = this.get("liquityAmount");
+  get liquidityAmount(): BigInt | null {
+    let value = this.get("liquidityAmount");
     if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -1349,11 +1349,11 @@ export class Burn extends Entity {
     }
   }
 
-  set liquityAmount(value: BigInt | null) {
+  set liquidityAmount(value: BigInt | null) {
     if (value === null) {
-      this.unset("liquityAmount");
+      this.unset("liquidityAmount");
     } else {
-      this.set("liquityAmount", Value.fromBigInt(value as BigInt));
+      this.set("liquidityAmount", Value.fromBigInt(value as BigInt));
     }
   }
 

@@ -2,12 +2,18 @@
   "name": "uniswap-v2-subgraph1",
   "version": "0.1.0",
   "scripts": {
-    "codegen": "rm -rf generated/*; graph codegen",
+    "codegen": "graph codegen --output-dir src/types/",
     "deploy": "graph deploy masterbid/uniswap-v2-subgraph1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.1",
-    "@graphprotocol/graph-ts": "^0.20.0"
+    "@graphprotocol/graph-ts": "^0.20.0",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.2"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
