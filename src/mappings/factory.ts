@@ -78,13 +78,9 @@ export function handleNewPair(event: PairCreated): void {
   pair.blockNumber = event.block.number
   pair.timestamp = event.block.timestamp
 
-  let pairSnapshot = createPairSnapshot(pair, event)
-  let id = event.transaction.hash
-    .toHexString()
-    .concat(event.logIndex.toString())
-  let history = PairSnapshot.load(id)
+  createPairSnapshot(pair, event)
   createMarketSnapshot(market, event)
-    pair.history = history[pairSnapshot.id]
+    
 
 
   // create the tracked contract based on the template
