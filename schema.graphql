@@ -159,6 +159,12 @@ type PositionSnapshot @entity {
   transferredTo: [String!]!         # TokenBalance string format
 }
 
+type AccountLiquidity @entity {
+  id: ID! # {pairAddress}{accoutnAddress}
+  pair: Pair!
+  account: Account!
+  balance: BigInt!
+}
 # Created on PairCreated event on UniswapV2Factory.sol
 # feeTo is not part of Pair contract. We need to fetch it from factory contract
 type Pair @entity {

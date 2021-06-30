@@ -1,45 +1,14 @@
 specVersion: 0.0.2
-description: Uniswap-v2
-repository: https://github.com/masterbid/uniswap_v2_subgraph
 schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Uniswap
+    name: UniswapV2Factory
     network: mainnet
     source:
       address: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f"
-      abi: Factory
+      abi: UniswapV2Factory
       startBlock: 10000834
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: Uniswap\Uniswap.wasm
-      entities:
-        - Pair
-        - Token
-        - Position
-        - Account
-        - PairSnapshot
-      abis:
-        - name: Factory
-          file: Uniswap\abis\factory.json
-        - name: ERC20
-          file: Uniswap\abis\ERC20.json
-        - name: ERC20SymbolBytes
-          file: Uniswap\abis\ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: Uniswap\abis\ERC20NameBytes.json
-      eventHandlers:
-        - event: PairCreated(indexed address,indexed address,address,uint256)
-          handler: handleNewPair
-templates:
-  - kind: ethereum/contract
-    name: Pair
-    network: mainnet
-    source:
-      abi: Pair
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -48,25 +17,50 @@ templates:
         - Account
         - Token
         - Market
-        - MarketSnapshot
+        - Pair
+      abis:
+        - name: ERC20
+          file: UniswapV2Factory\abis\IERC20.json
+        - name: UniswapV2Factory
+          file: UniswapV2Factory\abis\IUniswapV2Factory.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handlePairCreated
+      file: UniswapV2Factory\UniswapV2Factory.wasm
+templates:
+  - kind: ethereum/contract
+    name: UniswapV2Pair
+    network: mainnet
+    source:
+      abi: UniswapV2Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: templates\UniswapV2Pair\UniswapV2Pair.wasm
+      entities:
+        - Account
+        - Token
+        - Market
+        - Transaction
+        - Transfer
         - Position
-        - AccountPosition
+        - PositionSnapshot
         - Pair
         - PairSnapshot
-        - Mint
-        - Burn
-        - Transaction
-        - PositionSnapshot
       abis:
-        - name: Pair
-          file: Pair\abis\pair.json
-        - name: Factory
-          file: Pair\abis\factory.json
+        - name: ERC20
+          file: UniswapV2Pair\abis\IERC20.json
+        - name: UniswapV2Factory
+          file: UniswapV2Pair\abis\IUniswapV2Factory.json
+        - name: UniswapV2Pair
+          file: UniswapV2Pair\abis\IUniswapV2Pair.json
       eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Sync(uint112,uint112)
+          handler: handleSync
         - event: Mint(indexed address,uint256,uint256)
           handler: handleMint
         - event: Burn(indexed address,uint256,uint256,indexed address)
           handler: handleBurn
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: templates\Pair\Pair.wasm
